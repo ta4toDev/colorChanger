@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<input type="range" id="input-r" min="0" max="255" value="255">rot
+<input type="range" id="input-g" min="0" max="255" value="255">grün
+<input type="range" id="input-b" min="0" max="255" value="255">blau
+<script>
+    const inputR = document.querySelector('#input-r');
+    const inputG = document.querySelector('#input-g');
+    const inputB = document.querySelector('#input-b');
+    const body = document.querySelector('body');
+
+    let bgColors;
+    if (localStorage.getItem('background')){
+        let json = localStorage.getItem('background');
+        bgColors = JSON.parse(json);
+    } else {
+        bgColors = {
+            r: 255,
+            g: 255,
+            b: 255
+        };
+    }
+    body.style.backgroundColor = 'rgb(' + bgColors.r + ',' + bgColors.g + ',' + bgColors.b + ')';
+
+    function updateBackgroundColor() {
+        body.style.backgroundColor = 'rgb(' + bgColors.r + ',' + bgColors.g + ',' + bgColors.b + ')';
+        let json = JSON.stringify(bgColors);
+        localStorage.setItem('background', json);
+    }
+
+    inputR.addEventListener('input', function (e) {
+        bgColors.r = e.target.value;
+        updateBackgroundColor();
+    });
+
+    inputG.addEventListener('input', function (e) {
+        bgColors.g = e.target.value;
+        updateBackgroundColor();
+    });
+
+    inputB.addEventListener('input', function (e) {
+        bgColors.b = e.target.value;
+        updateBackgroundColor();
+    });
+</script>
+</body>
+</html>
